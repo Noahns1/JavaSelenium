@@ -13,22 +13,23 @@ import java.util.Map;
 
 public class TestDriveSteps {
 
+    WebDriver driver;
+
     @Given("User is on Chrome")
     public void user_is_on_chrome() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @When("User goes to google")
     public void user_goes_to_google() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        driver.get("https://www.google.com/");
     }
 
     @Then("Window closes")
     public void window_closes() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        driver.close();
     }
 
 
