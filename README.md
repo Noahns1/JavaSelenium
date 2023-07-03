@@ -18,7 +18,7 @@ Languages and Tools:
 ### What Is My Project?
 This project is part of a twin set of projects that achieve identical functionality. In this project, Java, Maven, Selenium, TestNG, and Cucumber are utilized for Behavior-driven development (BDD) to automate test cases on Amazon. Its twin project achieves the same test cases but implements Python, Selenium, and Behave.
 
-[Twin Project](https://github.com/Noahns1/JavaPython)
+[Twin Project](https://github.com/Noahns1/PythonSelenium)
 
 ---
 ### Why Is This Project Useful?
