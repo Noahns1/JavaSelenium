@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+
+import java.util.Map;
 
 
 public class AmazonSteps {
@@ -80,5 +83,112 @@ public class AmazonSteps {
     @Then("close browser")
     public void closeBrowser() {
         driver.close();
+    }
+
+    //Below scripts are for scenario: incorrectly attempt to create an account
+
+    @When("User clicks Account & Lists")
+    public void userClicksAccountLists() {
+        WebElement accountAndList = driver.findElement(By.id("nav-link-accountList"));
+        accountAndList.click();
+    }
+
+    @Then("User is on Sign in page")
+    public void userIsOnSignInPage() {
+        WebElement signInTitle = driver.findElement(By.xpath("//*[@id=\"authportal-main-section\"]/div[2]" +
+                "/div[2]/div[1]/form/div/div/div/h1"));
+        String actualSignInTitle = signInTitle.getText();
+        String expectedSignInTitle = "Sign in";
+        Assert.assertEquals(actualSignInTitle, expectedSignInTitle);
+    }
+
+    @When("User clicks Create your Amazon account")
+    public void userClicksCreateYourAmazonAccount() {
+        WebElement createAccount = driver.findElement(By.id("createAccountSubmit"));
+        createAccount.click();
+    }
+
+    @Then("User is on Create account page")
+    public void userIsOnCreateAccountPage() {
+        WebElement signInTitle = driver.findElement(By.xpath("//*[@id=\"ap_register_form\"]/div/div/h1"));
+        String actualSignInTitle = signInTitle.getText();
+        String expectedSignInTitle = "Create account";
+        Assert.assertEquals(actualSignInTitle, expectedSignInTitle);
+    }
+
+    @And("User clicks continue")
+    public void userClicksContinue() {
+        WebElement continueBtn = driver.findElement(By.id("continue"));
+        continueBtn.click();
+    }
+
+    @Then("Verifies error messages from incorrect entries")
+    public void verifiesErrorMessagesFromIncorrectEntries(DataTable dataTable) {
+        Map<String, String> dataMap = dataTable.asMap(String.class, String.class);
+
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            String fieldId = entry.getKey();
+            String value = entry.getValue();
+
+            WebElement findError = driver.findElement(By.id(fieldId));
+            String actualError = findError.getText();
+            Assert.assertEquals(value, actualError);
+        }
+    }
+
+    @When("User enters invalid email")
+    public void userEntersInvalidEmail() {
+        WebElement badEmail = driver.findElement(By.id("ap_email"));
+        badEmail.sendKeys("NotAnEmail");
+
+        WebElement continueBtn = driver.findElement(By.id("continue"));
+        continueBtn.click();
+    }
+
+    @Then("Verifies error message for email")
+    public void verifiesErrorMessageForEmail() {
+        WebElement emailError = driver.findElement(By.id("auth-email-invalid-claim-alert"));
+        String actualEmailError = emailError.getText();
+        String expectedEmailError = "Wrong or Invalid email address or mobile phone number. " +
+                "Please correct and try again.";
+        Assert.assertEquals(actualEmailError, expectedEmailError);
+    }
+
+    @When("User enter mismatching passwords")
+    public void userEnterMismatchingPasswords() {
+        WebElement password = driver.findElement(By.id("ap_password"));
+        password.sendKeys("password1");
+
+        WebElement confirmPassword = driver.findElement(By.id("ap_password_check"));
+        confirmPassword.sendKeys("password2");
+
+        WebElement continueBtn = driver.findElement(By.id("continue"));
+        continueBtn.click();
+    }
+
+    @Then("Verifies error message for mismatching password")
+    public void verifiesErrorMessageForMismatchingPassword() {
+        WebElement mismatchPW = driver.findElement(By.id("auth-password-mismatch-alert"));
+        String actualMismatchPW = mismatchPW.getText();
+        String expectedMismatchPW = "Passwords must match";
+        Assert.assertEquals(actualMismatchPW, expectedMismatchPW);
+    }
+
+    @When("User enters an improper password")
+    public void userEntersAnImproperPassword() {
+        WebElement badPW = driver.findElement(By.id("ap_password"));
+        badPW.clear();
+        badPW.sendKeys("badpw");
+
+        WebElement continueBtn = driver.findElement(By.id("continue"));
+        continueBtn.click();
+    }
+
+    @Then("Verifies error message for improper password")
+    public void verifiesErrorMessageForImproperPassword() {
+        WebElement badPWError = driver.findElement(By.id("auth-password-invalid-password-alert"));
+        String actualBadPWError = badPWError.getText();
+        String expectedBadPWError = "Minimum 6 characters required";
+        Assert.assertEquals(actualBadPWError, expectedBadPWError);
     }
 }
