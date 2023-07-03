@@ -26,7 +26,7 @@ I developed this project to showcase not only my proficiency in test case creati
 
 ---
 ### Dependencies
-- Selenium webdriver
+- Selenium Webdriver
 - Cucumber
 - TestNG
 - Maven
