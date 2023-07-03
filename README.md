@@ -30,6 +30,7 @@ I developed this project to showcase not only my proficiency in test case creati
 - Cucumber
 - TestNG
 - Maven
+- Chrome Driver
 
 ---
 ### How To Use This Project
