@@ -16,7 +16,7 @@ Feature: Amazon Basics
     Then close browser
 
   @negative
-  Scenario: incorrectly attempt to create an account
+  Scenario: Amazon - Incorrectly attempt to create an account
     When User clicks Account & Lists
     Then User is on Sign in page
     When User clicks Create your Amazon account
