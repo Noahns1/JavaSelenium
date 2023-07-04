@@ -42,7 +42,7 @@ I developed this project to showcase not only my proficiency in test case creati
 
 ---
 ### Scenarios
-In this project, I've implemented three scenarios that are identical to those in the twin project. The only distinction is that those have been converted to Python for implementation.
+In this project, I've implemented four scenarios that are identical to those in the twin project. The only distinction is that those have been converted to Python for implementation.
 
 These Scenarios are:
 
@@ -52,3 +52,5 @@ These Scenarios are:
      - This scenario focuses on searching for an item, selecting it, adding it to the cart, and then validating its presence in the cart.
 3. Amazon - Incorrectly attempt to create an account
      - This scenario concentrates on negative testing by simulating errors that arise when incorrect input information is provided for creating an account.
+4. Amazon - Validate text on item
+     - This scenario's focus is on validating text on a specific item selected, such as it's Title, Author, Description and preface.
