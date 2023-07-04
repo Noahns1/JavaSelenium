@@ -33,3 +33,18 @@ Feature: Amazon Basics
     When User enters an improper password
     Then Verifies error message for improper password
     Then close browser
+
+  @positive
+  Scenario: Amazon - Validate text on item
+    When User clicks on search bar
+    And User searches for Python Selenium book
+    And User selects a Python Selenium book
+    And Clicks on Read more
+    Then User validates Title and Author on item page
+      | productTitle  | Test-Driven Development with Python: Obey the Testing Goat: Using Django, Selenium, and JavaScript |
+      | bylineInfo    | by Harry Percival (Author)                                                                         |
+    Then User validates book description
+      | //*[@id="bookDescription_feature_div"]/div/div[1]/p[1]/span[1]      | By taking you through the development of a real web application from beginning to end, the second edition of this hands-on guide demonstrates the practical advantages of test-driven development (TDD) with Python. You’ll learn how to write and run tests |
+      | //*[@id="bookDescription_feature_div"]/div/div[1]/p[2]/span          | In the process, you’ll learn the basics of Django, Selenium, Git, jQuery, and Mock, along with current web development techniques. If you’re ready to take your Python skills to the next level, this book―updated for Python 3.6―clearly demonstrates how TDD encourages simple designs and inspires confidence.|
+    Then User validates preface
+    Then close browser

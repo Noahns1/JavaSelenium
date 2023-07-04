@@ -191,4 +191,61 @@ public class AmazonSteps {
         String expectedBadPWError = "Minimum 6 characters required";
         Assert.assertEquals(actualBadPWError, expectedBadPWError);
     }
+
+    //Below scripts are for scenario: Amazon - Validate text on item
+
+    @And("User searches for Python Selenium book")
+    public void userSearchesForPythonSeleniumBook() {
+        WebElement searchPythonBook = driver.findElement(By.id("twotabsearchtextbox"));
+        searchPythonBook.sendKeys("Python Selenium book");
+
+        WebElement searchBTN = driver.findElement(By.id("nav-search-submit-button"));
+        searchBTN.click();
+    }
+
+    @And("User selects a Python Selenium book")
+    public void userSelectsAPythonSeleniumBook() {
+        WebElement findBook = driver.findElement(By.linkText("Test-Driven Development with Python: Obey the Testing Goat: " +
+                "Using Django, Selenium, and JavaScript"));
+        findBook.click();
+    }
+
+    @And("Clicks on Read more")
+    public void clicksOnReadMore() {
+        WebElement readMore = driver.findElement(By.linkText("Read more"));
+        readMore.click();
+    }
+
+    @Then("User validates Title and Author on item page")
+    public void userValidatesTitleAndAuthorOnItemPage(DataTable dataTable) {
+        Map<String, String> dataMap = dataTable.asMap(String.class, String.class);
+
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            String fieldId = entry.getKey();
+            String value = entry.getValue();
+
+            WebElement findError = driver.findElement(By.id(fieldId));
+            String actualError = findError.getText();
+            Assert.assertEquals(value, actualError);
+        }
+    }
+
+    @Then("User validates book description")
+    public void userValidatesBookDescription(DataTable dataTable) {
+        Map<String, String> dataMap = dataTable.asMap(String.class, String.class);
+
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            String fieldPath = entry.getKey();
+            String value = entry.getValue();
+
+            WebElement findError = driver.findElement(By.xpath(fieldPath));
+            String actualError = findError.getText();
+            Assert.assertEquals(value, actualError);
+        }
+    }
+
+    @Then("User validates preface")
+    public void userValidatesPreface() {
+        WebElement findPreface = driver.findElement(By.xpath("//*[contains(text(), 'From the Preface')]"));
+    }
 }
